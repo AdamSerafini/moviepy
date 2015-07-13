@@ -1120,7 +1120,10 @@ class TextClip(ImageClip):
                 try:  # only in Python3 will this work
                     os.write(temptxt_fd, bytes(txt, 'UTF8'))
                 except TypeError:  # oops, fall back to Python2
-                    os.write(temptxt_fd, txt)
+                    # Modification to enable unicode txt argument to TextClip
+                    # Now able to use TextClip for other languages,
+                    # But txt must be Unicode.
+                    os.write(temptxt_fd, txt.encode('utf-8'))
                 os.close(temptxt_fd)
             txt = '@' + temptxt
         else:
